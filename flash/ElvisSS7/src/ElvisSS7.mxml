@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:flexlib="http://code.google.com/p/flexlib/" xmlns:components="components.*" 
+	width="1000" height="600" 
+	showStatusBar="true" title="{Model.PROGRAM_NAME}"
+	creationComplete="onCreationCompleteHandler(event)">
+	
+	<fx:Script source="ElvisSS7Script.as"/>
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:MenuBar id="menubar" width="100%" showRoot="false"/> 
+	<s:VGroup top="21" left="0" right="0" horizontalAlign="contentJustify" paddingLeft="2" paddingTop="2" paddingRight="2" height="60">
+		<s:HGroup verticalAlign="middle">
+			<s:Label text="协议识别:" verticalAlign="middle"/>
+			<s:ComboBox id="protocolField" width="250" dataProvider="{protocolData}"/>
+			
+			<s:Label text="消息类型:" verticalAlign="middle"/>
+			<s:ComboBox id="msgTypeField" width="250" dataProvider="{msgTypeData}"/>
+			
+			<s:Label text="原因值:" verticalAlign="middle"/>
+			<s:ComboBox id="causeField" width="80" dataProvider="{causeData}"/>
+		</s:HGroup>
+		<s:HGroup verticalAlign="middle">
+			<s:Label text="时间范围:" textAlign="left" verticalAlign="middle"/>
+			<s:ComboBox id="startTimeField" width="60"/>
+			<s:Label text="至" verticalAlign="middle"/>
+			<s:ComboBox id="finishTimeField" width="60"/>
+
+			<s:Label text="方向:" verticalAlign="middle"/>
+			<s:ComboBox id="directionField" width="60" dataProvider="{directionData}"/>
+
+			<s:Label text="全文检索:" verticalAlign="middle"/>
+			<s:TextInput id="searchField" width="100"/>
+			
+			<mx:Spacer width="100"/>
+			<s:Button label="过滤"/>
+		</s:HGroup>
+	</s:VGroup>
+	<mx:DataGrid id="dataGrid" 
+		right="0" left="0" bottom="0" top="82" variableRowHeight="true" useRollOver="false" selectable="true" selectionColor="#FFFFFF" alternatingItemColors="#FFFFFF" horizontalGridLines="true" horizontalGridLineColor="#cccccc" 
+		itemRenderer="{new ClassFactory(mx.controls.Text)}"  doubleClickEnabled="true" itemDoubleClick="dataGridDoubleClickHandler(event)">
+		<mx:columns>
+			<mx:DataGridColumn headerText="序号" dataField="id" resizable="false" sortable="true" width="50"/>
+			<mx:DataGridColumn headerText="时间戳" dataField="timestamp" resizable="false" sortable="true" width="120"/>
+			<mx:DataGridColumn headerText="方向" dataField="direction" resizable="false" sortable="true" width="80"/>
+			<mx:DataGridColumn headerText="协议识别" dataField="protocol" resizable="true" sortable="true" wordWrap="true" width="120"/>
+			<mx:DataGridColumn headerText="消息类型" dataField="msgType" sortable="true" wordWrap="true"/>
+			<mx:DataGridColumn headerText="原因值" dataField="cause" sortable="true" width="120"/>
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<components:DragableTitleWindow x="510" y="350" width="250" height="200" title="::调试器::" id="logWin" dragEnabled="true" >
+		<s:TextArea id="logPanel" right="0" horizontalCenter="0" left="0" top="0" verticalCenter="0" bottom="0"/>
+	</components:DragableTitleWindow>
+
+</s:WindowedApplication>
